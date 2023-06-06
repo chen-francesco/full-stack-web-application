@@ -2,15 +2,21 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { TableDataComponent } from './table-data/table-data.component';
+import { AppRoutingModule } from './app-routing.module';
+import { InterventiComponent } from './interventi/interventi.component';
+import { IComplessiComponent } from './i-complessi/i-complessi.component';
+import { AziendeComponent } from './aziende/aziende.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TableDataComponent
+    InterventiComponent,
+    IComplessiComponent,
+    AziendeComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

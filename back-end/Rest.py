@@ -9,7 +9,7 @@ class Rest:
         pass
         
     @cherrypy.tools.json_out()
-    def GET(self, key = -1, tabella = "V_Acquario"):
+    def GET(self, tabella = "V_Acquario", key = -1):
         w = Wrapper()
         x = 0
         if str(key) == "-1":
@@ -40,7 +40,7 @@ class Rest:
     
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
-    def PUT(self, key = -1, tabella = "V_Acquario"):
+    def PUT(self, tabella = "V_Acquario", key = -1):
         data = cherrypy.request.json
         w = Wrapper
         print(data)
@@ -52,7 +52,7 @@ class Rest:
         return x
     
     @cherrypy.tools.json_out()
-    def DELETE(self, key = -1, tabella = "V_Acquario"):
+    def DELETE(self, tabella = "V_Acquario", key = -1):
         w = Wrapper()
         x = w.delete(tabella = tabella, value = key)
         if x["Esito"] == "Positivo":
