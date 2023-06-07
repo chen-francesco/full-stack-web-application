@@ -1,14 +1,49 @@
+<h1>Interventi Complessi</h1>
+
+<table>
+  <tr>
+    <th>ID Intervento</th>
+    <th>ID Azienda</th>
+  </tr>
+
+  <tr>
+    <td>
+      <input type="number" [(ngModel)] = "IDIntervento">
+    </td>
+
+    <td>
+      <input type="number" [(ngModel)] = "IDAzienda">
+    </td>
+
+    <td>
+      <button (click) = "inserisci()">Inserisci</button>
+    </td>
+  </tr>
+</table>
+
+<br>
+<br>
+
 <table>
     <tr>
-      <th>ID</th>
-      <th>Data e Ora</th>
-      <th>Nota</th>
-      <th>Report</th>
+      <th>ID Intervento</th>
+      <th>ID Azienda</th>
     </tr>
     <tr *ngFor="let x of data">
-        <td>{{x.ID}}</td>
-        <td>{{x.DataOra}}</td>
-        <td>{{x.Nota}}</td>
-        <td>{{x.Report}}</td>
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.IDIntervento}}</a>
+          <input [hidden] = "x.nascondi" type = "number" [(ngModel)]=x.IDIntervento>
+      </td>
+
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.IDAzienda}}</a>
+        <input [hidden] = "x.nascondi" type = "number" [(ngModel)]=x.IDAzienda>
+      </td>
+
+      <td>
+        <button [hidden]="!x.nascondi" (click) = "edita(x.IDIntervento)">Modifica</button>
+        <button [hidden]="!x.nascondi" (click) = "cancella(x.IDIntervento)">Elimina</button>
+        <button [hidden]="x.nascondi" (click) = 'modifica(x.IDIntervento)'>Conferma</button>
+      </td>
     </tr>
 </table>

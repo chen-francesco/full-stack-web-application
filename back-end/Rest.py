@@ -13,7 +13,7 @@ class Rest:
         w = Wrapper()
         x = 0
         if str(key) == "-1":
-            x = w.fetch_all(tabella, True)
+            x = w.fetch_all(tabella = tabella, as_dict = True)
             cherrypy.response.status = 200
         else:
             x = w.fetch(tabella, True, key)
@@ -29,9 +29,17 @@ class Rest:
     @cherrypy.tools.json_out()
     def POST(self, tabella = "V_Acquario"):
         data = cherrypy.request.json
-        w = Wrapper
-        print(data)
-        x = w.insert(tabella = tabella, data = data)
+        #print("post" + str(data))
+        #print(type(data))
+        #print(tabella)
+        #print(type(tabella))
+        w = Wrapper()
+        y = []
+        for field in data.keys():
+            y.append(data[field])
+        y = tuple(y)
+        print(y)
+        x = w.insert(tabella = tabella, data = y)
         if x["Esito"] == "Positivo":
             cherrypy.request.status = 200
         else:
@@ -42,8 +50,7 @@ class Rest:
     @cherrypy.tools.json_out()
     def PUT(self, tabella = "V_Acquario", key = -1):
         data = cherrypy.request.json
-        w = Wrapper
-        print(data)
+        w = Wrapper()
         x = w.update(tabella = tabella, data = data, value = key)
         if x["Esito"] == "Positivo":
             cherrypy.request.status = 200

@@ -1,11 +1,14 @@
 import pymssql
+from datetime import datetime
+import simplejson as json
 
 class Wrapper:
 
     conn = 0
 
     #def __init__(self, server="0.tcp.eu.ngrok.io:12010", user="SA", password="matty2107", database="TestDB"):
-    def __init__(self, server="192.168.40.16\\SQLEXPRESS", user="CRD2122", password="xxx123##", database="CRD2122"):
+    #def __init__(self, server="192.168.40.16\\SQLEXPRESS", user="CRD2122", password="xxx123##", database="CRD2122"):
+    def __init__(self, server="5.172.64.20", user="CRD2122", password="xxx123##", database="CRD2122"):
         self.server = server
         self.user = user
         self.password = password
@@ -27,7 +30,6 @@ class Wrapper:
 
     def update(self, tabella = "V_Acquario", data = {}, value = 0):
         x = {}
-
         try:
             conn = self.connessione()
             cur = conn.cursor(as_dict = True)
@@ -54,7 +56,7 @@ class Wrapper:
             
             y = tuple(y)
             print(sql)
-
+            print(y)
             cur.execute(sql, y)
             conn.commit()
             print(cur.rowcount)
@@ -99,6 +101,7 @@ class Wrapper:
     def insert(self, tabella = "V_Acquario", data = ("Siches",)):
         x = 0
         try:
+            print(data)
             conn = self.connessione()
             cur = conn.cursor(as_dict = True)
             sql = "INSERT INTO " + str(tabella.replace(" ","")) + " VALUES ("
@@ -109,6 +112,7 @@ class Wrapper:
                     sql += "%d,"
             sql = sql[:-1]
             sql += ")"
+            print(sql)
             cur.execute(sql, data)
             conn.commit()
             x = {"Esito" : "Positivo"}
@@ -128,6 +132,11 @@ class Wrapper:
             sql = "SELECT * FROM " + str(tabella).replace(" ", "")
             cur.execute(sql)
             x = cur.fetchall()
+            for i in x:
+                for field in i.keys():
+                    if isinstance(i[field], datetime):
+                        i[field] = i[field].isoformat().replace("T", " ")
+            print(x)
         except Exception as e:
             print(e)
         finally:
@@ -149,6 +158,9 @@ class Wrapper:
                 sql += str(value).replace(" ", "")
             cur.execute(sql)
             x = cur.fetchone()
+            for field in x.keys():
+                if isinstance(x[field], datetime):
+                    x[field] = x[field].isoformat().replace("T", " ")
         except Exception as e:
             print(e)
         finally:
@@ -176,4 +188,5 @@ class Wrapper:
             print(e)
         finally:
             self.disconnessione(conn)
+            print(field["Column_Name"])
             return field["Column_Name"]

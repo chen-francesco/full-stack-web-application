@@ -1,1 +1,66 @@
-<p>aziende works!</p>
+<h1>Aziende</h1>
+
+<table>
+  <tr>
+    <th>Tipologia intervento</th>
+    <th>Spesa</th>
+    <th>Componenti</th>
+  </tr>
+
+  <tr>
+    <td>
+      <input type="text" [(ngModel)] = "TipoIntervento">
+    </td>
+
+    <td>
+      <input type="number" [(ngModel)] = "Spesa">
+    </td>
+
+    <td>
+      <input type="text" [(ngModel)] = "Componenti">
+    </td>
+
+    <td>
+      <button (click) = "inserisci()">Inserisci</button>
+    </td>
+  </tr>
+</table>
+
+<br>
+<br>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Tipologia intervento</th>
+        <th>Spesa</th>
+        <th>Componenti</th>
+    </tr>
+    <tr *ngFor="let x of data">
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.ID}}</a>
+          <input [hidden] = "x.nascondi" type = "text" [(ngModel)]=x.ID>
+      </td>
+
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.TipoIntervento}}</a>
+        <input [hidden] = "x.nascondi" type = "text" [(ngModel)]=x.TipoIntervento>
+      </td>
+
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.Spesa}}</a>
+        <input [hidden] = "x.nascondi" type = "number" [(ngModel)]=x.Spesa>
+      </td>
+
+      <td>
+        <a [hidden] = "!x.nascondi">{{x.Componenti}}</a>
+        <input [hidden] = "x.nascondi" type = "text" [(ngModel)]=x.Componenti>
+      </td>
+
+      <td>
+        <button [hidden]="!x.nascondi" (click) = "edita(x.ID)">Modifica</button>
+        <button [hidden]="!x.nascondi" (click) = "cancella(x.ID)">Elimina</button>
+        <button [hidden]="x.nascondi" (click) = 'modifica(x.ID)'>Conferma</button>
+      </td>
+    </tr>
+</table>
